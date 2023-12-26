@@ -193,8 +193,9 @@ def loss_D_fn(P, D, options, images, gen_images,labels):
 
 def loss_G_fn(P, D, options, images, gen_images):
     N = gen_images.size(0)
+    cat_images = torch.cat([gen_images, gen_images], dim=0)
 
-    d_gen,aux = D(P.augment_fn2(gen_images), sg_linear=True, projection=True, projection2=True)
+    d_gen,aux = D(P.augment_fn2(cat_images), sg_linear=True, projection=True, projection2=True)
 
     reals = aux['projection2']
     reals = F.normalize(reals)
